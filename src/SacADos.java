@@ -12,7 +12,7 @@ public class SacADos {
 
         ArrayList<Obj> objects = new ArrayList<>();
 
-        int totalWeight = Integer.parseInt(sc.nextLine());
+        double totalWeight = Integer.parseInt(sc.nextLine());
         int id = 1;
 
         while (sc.hasNextLine()) {
@@ -25,5 +25,22 @@ public class SacADos {
         Collections.sort(objects);
 
         System.out.println(objects);
+    }
+
+    public double glouton(ArrayList<Obj> objects, double totalWeight) {
+
+        double result = 0;
+        double remaining = totalWeight;
+        ArrayList<Obj> chosenObjects = new ArrayList<>();
+
+        for(Obj object : objects) {
+            if(object.weight() > remaining) {
+                chosenObjects.add(object);
+                remaining -= object.weight();
+            }
+            else {
+                //Retourner la fraction
+            }
+        }
     }
 }

@@ -13,6 +13,14 @@ public class Obj implements Comparable<Obj>{
         return -1;
     }
 
+    public double weight() {
+        return weight;
+    }
+
+    public double value() {
+        return value;
+    }
+
     public String toString() {
         return id + " : " + value + "/" + weight;
     }
