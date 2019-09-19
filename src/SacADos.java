@@ -24,23 +24,24 @@ public class SacADos {
 
         Collections.sort(objects);
 
-        System.out.println(objects);
+        System.out.println("Borne sup : " + glouton(objects, totalWeight));
     }
 
-    public double glouton(ArrayList<Obj> objects, double totalWeight) {
+    private static double glouton(ArrayList<Obj> objects, double totalWeight) {
 
-        double result = 0;
         double remaining = totalWeight;
-        ArrayList<Obj> chosenObjects = new ArrayList<>();
+        double upperBound = 0;
 
         for(Obj object : objects) {
             if(object.weight() > remaining) {
-                chosenObjects.add(object);
+                upperBound += object.value();
                 remaining -= object.weight();
             }
             else {
-                //Retourner la fraction
+                upperBound += remaining / object.weight() * object.value();
+                break;
             }
         }
+        return upperBound;
     }
 }
