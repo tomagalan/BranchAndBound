@@ -8,7 +8,7 @@ public class Obj implements Comparable<Obj>{
     }
 
     public int compareTo(Obj o) {
-        if (value / weight > o.value / o.weight) return 1;
+        if (value / weight < o.value / o.weight) return 1;
         if(value / weight ==  o.value / o.weight) return 0;
         return -1;
     }
