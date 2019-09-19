@@ -33,7 +33,7 @@ public class SacADos {
         double upperBound = 0;
 
         for(Obj object : objects) {
-            if(object.weight() > remaining) {
+            if(object.weight() <= remaining) {
                 upperBound += object.value();
                 remaining -= object.weight();
             }
