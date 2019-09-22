@@ -6,10 +6,11 @@ import java.util.Scanner;
 public class SacADos {
 
     public static double bestValueGlobal = 0;
+    public static ArrayList<Integer> selectedObjectsGlobal = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
 
-        File file = new File("sacADos.txt");
+        File file = new File("sac0.txt");
         Scanner sc = new Scanner(file);
 
         ArrayList<Obj> objects = new ArrayList<>();
@@ -26,11 +27,17 @@ public class SacADos {
 
         Collections.sort(objects);
 
-        /*System.out.println("Valeur optimale : " + branchAndBound(objects, 0, totalWeight));*/
-        branchAndBound2(objects, 0, totalWeight, 0);
+        // Enlever les commentaires pour un parcourt complet de l'arbre
+        //System.out.println("Valeur optimale : " + branchAndBound(objects, 0, totalWeight));
+
+        // Parcours optimisé des solutions
+        branchAndBoundOpti(objects, 0, totalWeight, 0, new ArrayList<Integer>());
         System.out.println("Valeur optimale : " + bestValueGlobal);
+        System.out.println("Objets sélectionnés : " + selectedObjectsGlobal);
     }
 
+    /* Algorithme glouton, retourne une borne supérieure de la meilleure valeur
+    que l'on peut obtenir d'un sac */
     private static double glouton(ArrayList<Obj> objects, int index, double remaining) {
 
         double upperBound = 0;
@@ -48,6 +55,7 @@ public class SacADos {
         return upperBound;
     }
 
+    /* Parcours de l'arbre simple */
     private static double branchAndBound(ArrayList<Obj> objects, int index, double remaining) {
 
         double rightValue, leftValue = 0;
@@ -63,19 +71,26 @@ public class SacADos {
         return rightValue;
     }
 
-    private static void branchAndBound2(ArrayList<Obj> objects, int index, double remaining, double bestValue) {
+    /* Parcours de l'arbre optimisé avec utilisation de l'algorithme glouton à chaque noeud pour éviter
+    l'exploration de branches inutiles */
+    private static void branchAndBoundOpti(ArrayList<Obj> objects, int index, double remaining, double bestValue, ArrayList<Integer> selectedObjects) {
 
         if(index >= objects.size()) {
-            if (bestValue >= bestValueGlobal) bestValueGlobal =  bestValue;
+            if (bestValue >= bestValueGlobal){
+                bestValueGlobal =  bestValue;
+                selectedObjectsGlobal = new ArrayList<>(selectedObjects);
+            }
             return;
         }
 
         if(glouton(objects, index, remaining) + bestValue <= bestValueGlobal) return;
 
         if(objects.get(index).weight() <= remaining) {
-            branchAndBound2(objects, index + 1, remaining - objects.get(index).weight(), bestValue + objects.get(index).value());
+            selectedObjects.add(objects.get(index).id());
+            branchAndBoundOpti(objects, index + 1, remaining - objects.get(index).weight(), bestValue + objects.get(index).value(), selectedObjects);
+            selectedObjects.remove(selectedObjects.size() - 1);
         }
-        branchAndBound2(objects, index + 1, remaining, bestValue);
+        branchAndBoundOpti(objects, index + 1, remaining, bestValue, selectedObjects);
 
         return;
     }

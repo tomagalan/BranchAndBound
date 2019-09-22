@@ -21,6 +21,8 @@ public class Obj implements Comparable<Obj>{
         return value;
     }
 
+    public int id() { return id;}
+
     public String toString() {
         return id + " : " + value + "/" + weight;
     }
