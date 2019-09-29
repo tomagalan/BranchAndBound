@@ -41,7 +41,13 @@ public class BackPack {
         System.out.println("Number of cuts realized with glutton : " + cutNumber);
     }
 
-    /* Returns an upper bound of the optimum value of a bag */
+    /** Returns an upper bound of the optimum value of a bag
+     *
+     * @param items List of potential items to put in the bag
+     * @param index Index of the first item to consider
+     * @param remaining Remaining space (weight) in the bag
+     * @return An upper bound of the optimum value we can get from the bag
+     */
     private static double glutton(ArrayList<Item> items, int index, double remaining) {
 
         double upperBound = 0;
