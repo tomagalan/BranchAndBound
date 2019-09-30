@@ -33,7 +33,7 @@ public class BackPack {
             items.get(i).setId(i);
         }*/
 
-        // Complete search
+        // Remove annotation to perform complete search without cuts (may not end)
         // System.out.println("Optimum value: " + branchAndBound(items, 0, totalWeight));
 
         // Optimized search
