@@ -7,6 +7,10 @@ public class Item implements Comparable<Item>{
         this.id = id; this.weight = weight; this.value = value;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int compareTo(Item o) {
         return Double.compare(o.value / o.weight, value / weight);
     }
